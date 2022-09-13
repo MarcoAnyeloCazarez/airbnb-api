@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const { db } = require('../utils/database')
 
-const Acommodations = db.define('accomodations', {
+const Accommodations = db.define('accommodations', {
    id: {
        primaryKey: true,
        type: DataTypes.UUID,
@@ -18,9 +18,10 @@ const Acommodations = db.define('accomodations', {
     type: DataTypes.STRING
    },
 
-   gests: {
+   guests: {
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    defaultValue: 0
    },
 
    rooms: {
@@ -46,19 +47,19 @@ const Acommodations = db.define('accomodations', {
    hostId: {
     allowNull: false,
     type: DataTypes.UUID,
-    field: 'host_id'
+    field: 'userId'
    },
 
    score: {
     allowNull: false,
     type: DataTypes.FLOAT,
-    validate: {
-        min: 0,
-        max: 5
-    }
+    //validate: {
+      //  min: 0,
+        //max: 5
+    //}
    },
 
-   placesId: {
+   placeId: {
     allowNull: false,
     type: DataTypes.UUID
    },
@@ -71,12 +72,12 @@ const Acommodations = db.define('accomodations', {
    createdAt: {
     allowNull: false,
     type: DataTypes.DATEONLY,
-    field: 'created_at'
+    //field: 'created_at'
    },
 
    updatedAt: {
     type: DataTypes.DATEONLY,
-    field: 'updated_at'
+    //field: 'updated_at'
    },
 
    isActive: {
@@ -87,4 +88,4 @@ const Acommodations = db.define('accomodations', {
    }
 })
 
-module.exports = Acommodations
+module.exports = Accommodations

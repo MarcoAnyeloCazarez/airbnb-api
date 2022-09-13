@@ -1,4 +1,4 @@
-const Accomodations = require('./accomodations.model')
+const Accommodations = require('./accommodations.model')
 const AccomodationsImages = require('./accomodationsImages.model')
 const Places = require('./places.model')
 const Reservations = require('./reservations.model')
@@ -18,17 +18,17 @@ const initModels = () => {
     Users.hasMany(UsersImages)
     UsersImages.belongsTo(Users)
 
-    Users.belongsToMany(Accomodations, { through: Reservations })       //relacion de muchos a muchos, Reservations es la tabla terciaria que une a Users y Acomodations
-    Accomodations.belongsToMany(Users, { through: Reservations })
+    Users.belongsToMany(Accommodations, { through: Reservations })       //relacion de muchos a muchos, Reservations es la tabla terciaria que une a Users y Acomodations
+    Accommodations.belongsToMany(Users, { through: Reservations })
 
-    Places.hasMany(Accomodations)
-    Accomodations.belongsTo(Places)
+    Places.hasMany(Accommodations)
+    Accommodations.belongsTo(Places)
 
-    Accomodations.hasMany(AccomodationsImages)
-    AccomodationsImages.belongsTo(Accomodations)
+    Accommodations.hasMany(AccomodationsImages)
+    AccomodationsImages.belongsTo(Accommodations)
 
-    Users.hasMany(Accomodations)
-    Accomodations.belongsTo(Users)
+    Users.hasMany(Accommodations)
+    Accommodations.belongsTo(Users)
 }
 
 module.exports = initModels

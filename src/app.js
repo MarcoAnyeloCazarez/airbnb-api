@@ -31,7 +31,7 @@ if(process.env.NODE_ENV === 'production'){
     })
     .catch(err => console.log(err))
 }else {
-    db.sync({force: true})  // el force: true se usa para forzar una sincronización //! Solo para desarrollo
+    db.sync({force: true})  // el force: true se usa para forzar una sincronización (borra la información y la vuelve  crear) //! Solo para desarrollo
     .then(() => {
         console.log('Database synced'),
         defaultData()

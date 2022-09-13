@@ -139,9 +139,10 @@ const getUserWithRole = async (userId) => {
         attributes: {
             exclude: ["password", "createdAt", "updatedAt", "roleId"]
         },
-        include: [     //haciendo un join con información de otra tabla
+        include: [     //haciendo un join con información de otra tabla en este caso la de roles
             {
                 model: Roles,
+                as: "role",
                 attributes: {
                     exclude: ['id', 'createdAt', 'updatedAt']
                 }
