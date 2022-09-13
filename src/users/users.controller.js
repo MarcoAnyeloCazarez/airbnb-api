@@ -4,20 +4,23 @@ const { hashPassword, comparePassword } = require('../utils/crypt')   //! import
 const Users = require('../models/user.model')
 const passport = require('passport')
 const { password } = require('pg/lib/defaults')
+const Roles = require('../models/roles.model')
 
 const userDB = [{
     
     "id": "ed025bbb-5fbe-4ddf-9670-e43ce9d80c52",
-    "first_name": "Anayelo",
-    "last_name": "Cazarez",
+    "firsName": "Anayelo",
+    "lastName": "Cazarez",
     "email": "anyelocba7@gmail.com",
+    "gender": "",
     "password": "$2b$10$J8MM4kUcqvaSIxoOmUobHeVttKsjhLCgyjDQ3kPNuq9CCc7O/WeP2",
-    "phone": "",
-    "birthday_date": "16/03/1994",
-    "rol": "normal",
-    "profile_image": "",
-    "country": "México",
-    "is_active": true,
+    "phone": "123456789",
+    "birthdayDate": "16/03/1994",
+    "role": "1b08468b-7b6f-4b3d-bc67-62089ac8706f",
+    "profileImage": "",
+    "address": "",
+    "dni":"",
+    "status": "active",
     "verified": false
     
 }]
@@ -30,22 +33,9 @@ const getAllUsers = async () => {
         }
     })
     return data
-
-    //return userDB       //! Siempre se rrtotna algo en las funciones para poder contolar los errores
-    //? COMANDO SQL EQUIVALENTE: select * from users;
 }
 
 const getUserById = async (id) => {
-    //const data = userDB.filter(item => item.id === id)   //! me regresa un arreglo con el id que coincida con el de la peticion
-    /*if (data.length > 0){
-        return data[0]
-    }else {
-        return null
-    }*/
-
-    //return data.length ? data[0] : false
-    //? COMANDO SQL EQUIVALENTE: select * from users where id = ${id};
-
     const data = await Users.findOne({
         where: {
             id: id,
@@ -60,50 +50,28 @@ const getUserById = async (id) => {
 }
 
 const createUser = async (data) => {
-   /* const newUser = {
-        id: uuid.v4(),             //Oblligatorio y único      //!  uuid crea un identificador único 
-        first_name: data.first_name,     //Oblligatorio
-        last_name: data.last_name,      //Oblligatorio
-        email: data.email,          //Obligatorio y único
-        password: hashPassword(data.password),       //Oblligatorio    //! Corremos la función para encriptar la contraseña y le pasamos la contrasela a encriptar 
-        phone: data.phone ? data.phone : '',          //Único       //! usamos operador ternario (?), es como in if
-        birthday_date: data.birthday_date,  //Oblligatorio
-        rol: 'normal',            //Oblligatorio y por defecto "normal"
-        profile_image: data.profile_image ? data.profile_image : '',
-        country: data.country,        //Obligatorio
-        is_active: true,    //Oblligatorio y por defecto true
-        verified: false
-    }*/
-    //userDB.push(newUser)
-    //return(newUser)
-
-    const newUser = await Users.create({
+     const newUser = await Users.create({
         id: uuid.v4(),            
-        firstName: data.first_name,     
-        lastName: data.last_name,     
-        email: data.email,          
+        firstName: data.firstName,     
+        lastName: data.lastName,
+        gender: data.gender,      
+        email: data.email,         
         password: hashPassword(data.password),       
         phone: data.phone,          
-        birthdayDate: data.birthday_date,  
-        role: uuid,            
-        profileImage: data.profile_image,
-        country: data.country,
+        birthdayDate: data.birthdayDate,
+        dni: data.dni,  
+        address: data.address,            
+        profileImage: data.profileImage,
+        role_id: '234d4031-2f5e-4a16-a24f-319afd7f7835',
         status: 'active', 
         verified: false
-    })
+    });
     return newUser
 }
 
 //createUser({password: 'root'})
 
 const deleteUser = async (id) => {
-    /*const index = userDB.findIndex(user => user.id === id)
-    if (index !== -1){
-        userDB.splice(index, 1)
-    }else {
-        return false
-    }*/
-    
     const data = await Users.destroy({
         where: {
             id : id
@@ -112,50 +80,18 @@ const deleteUser = async (id) => {
     return data
 }
 
-const editUser = async (userId, data ,userRol) => {
-    /*const index = userDB.findIndex(user => user.id === id)
-    if(index !== -1){
-        userDB[index] = {
-            id: id,
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-            password: userDB[index].password,
-            phone: data.phone ? data.phone : '',
-            birthday_date: data.birthday_date,
-            role: data.rol,
-            profile_image: data.profile_image,
-            country: data.country,
-            is_active: data.is_active,
-            verified: false
-        }
-        return userDB[index]
-    }else{
-        createUser(data)
-    }*/
-    
-    if(userRol === 'admin'){
-        const {password, id, verified, ...restOfProperties} = data   //! las variables previas al split operatos ...restOfProperties no las cargará en el sigioente objeto
-        const response = await Users.update({
-            ...restOfProperties
-        }, {
-            where: {
-                id: userId
-            }
-        })
+
+// en este edit  el admin puede modificar usuarios
+const editUser = async (userId, data ,userRol) => {    
+    const {password, id, verified, role_id, ...restOfProperties} = data   //! las variables previas al split operatos ...restOfProperties no las cargará en el sigioente objeto
+    if(userRol === '1b08468b-7b6f-4b3d-bc67-62089ac8706f'){
+        const response = await Users.update({...restOfProperties, role_id}, {where: {id: userId}})
         return response
     }else {
         const {password, id, verified, role, ...restOfProperties} = data   //! las variables previas al split operatos ...restOfProperties no las cargará en el sigioente objeto
-        const response = await Users.update({
-            ...restOfProperties
-        }, {
-            where: {
-                id: userId
-            }
-        })
+        const response = await Users.update({...restOfProperties}, {where: {id: userId}})
         return response
-    }
-    
+    } 
 } 
 
 const getUserByEmail = async (email) => {
@@ -168,8 +104,7 @@ const getUserByEmail = async (email) => {
             is_active: true
         },
         attributes: {
-            exclude: [password]
-            //include:[name]  
+            exclude: [password, ] 
         }
      })
      return data
@@ -195,6 +130,27 @@ const editProfileImg = async (userID, imgUrl) => {
         return response
 }
 
+
+const getUserWithRole = async (userId) => {
+    const data = await Users.findAll({
+        where: {
+            id: userId
+        },
+        attributes: {
+            exclude: ["password", "createdAt", "updatedAt", "roleId"]
+        },
+        include: [     //haciendo un join con información de otra tabla
+            {
+                model: Roles,
+                attributes: {
+                    exclude: ['id', 'createdAt', 'updatedAt']
+                }
+            }
+        ]
+    })
+    return data
+}
+
 module.exports = {
     getAllUsers,
     editUser,
@@ -202,7 +158,8 @@ module.exports = {
     deleteUser,
     createUser,
     getUserByEmail,
-    editProfileImg
+    editProfileImg,
+    getUserWithRole
 }
 
 

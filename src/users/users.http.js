@@ -32,21 +32,25 @@ const getUsersById = (req, res) => {
 
 const registerUser = (req, res) => {   
     const body = req.body      //debenos tener habilitada app.use(express.json()) en el archivo app.js
+    console.log(body)
     if(!body){
         return res.status(400).json({message: 'El body no existe'})
     }
-    if(!body.first_name || !body.last_name || !body.email || !body.password || !body.birthday_date || !body.country){
+    if(!body.firstName || !body.lastName || !body.gender || !body.email || !body.phone || !body.password || !body.birthdayDate || !body.dni || !body.address || !body.profileImage){
             return res.status(400).json({
                 body: {body},
                 message: 'All fields must be completed', 
                 fields: {
-                    first_name: 'string',
-                    last_name: 'string',
+                    firstName: 'string',
+                    lastName: 'string',
+                    gender: 'string',
                     email: 'example@example.com',
                     password: 'password',
-                    birthday_date: 'DD/MM/YYYY',
-                    country: 'string',
-                    phone: '+524435796418'
+                    phone: '+524435796418',
+                    birthdayDate: 'YYYY/MM/DD',
+                    dni: 'string',
+                    address: 'string',
+                    profileImage: 'string'
             } })
         }else{
             userControllers.createUser(body)
@@ -57,7 +61,7 @@ const registerUser = (req, res) => {
                     })
                 })
                 .catch(err => {
-                    res.status(400).json({message: err, mess: 'The email must be unique'})
+                    res.status(400).json({error: err, message: 'The email is already been used'})
                 })
             //return res.status(201).json({message: `User created whith id: ${data.id}`})
         }
@@ -96,7 +100,6 @@ const edit = (req, res) => {
         !data.rol ||
         !data.profile_imge||
         !data.birthday_date ||
-        !data.country ||
         !data.is_active
     ){
         return res.status(400).json({message: "All fields must be completed",
@@ -109,12 +112,11 @@ const edit = (req, res) => {
             rol: "string",
             profile_image: "url",
             birthday_date: "DD/MM/YYYY",
-            country: "string",
             is_active: true
         }
     })
     }else{
-        const response = userControllers.editUser(id, data)
+        const response = userControllers.editUser(id, data, req.user.id)
         return res.status(200).json({
             message: 'User edited succesfully',
             user: response
@@ -195,6 +197,18 @@ const postProfileImg = (req, res) => {
 }
 
 
+const getUserRole = (req, res) => {
+    const id = req.params.id
+    userControllers.getUserWithRole(id)
+        .then((response) => {
+            res.status(200).json(response)
+        })
+        .catch(err => {
+            res.status(400).json({message: err})
+        })
+}
+
+
 module.exports = {
     getAll,
     getUsersById,
@@ -204,5 +218,6 @@ module.exports = {
     editMyUser,
     getUser,
     removeUser,
-    postProfileImg
+    postProfileImg,
+    getUserRole
 }

@@ -11,7 +11,7 @@ const UsersImages = require('./usersImages.model')
 //! creamos las relaciones entre los modelos
 const initModels = () => {
     //fk             //pk
-    Roles.hasMany(Users)    //! belongs indica donde esta la llave primaria
+    Roles.hasMany(Users) //{ foreignKey: { name: "role_id", allowNull: false } })    //! belongs indica donde esta la llave primaria
     Users.belongsTo(Roles)        //métodos posibles: belongsTo, belongsToMany, hasOne, hasMany         //! hasOne indica donde esta la llave foránea
    
 

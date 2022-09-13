@@ -40,18 +40,18 @@ const Users = db.define('users', {
     password: {
         alloNull: false,
         type: DataTypes.STRING,
-        validate: {
-            min: 8
-        }
+        //validate: {
+            //min: 8
+        //}
     },
 
     phone: {
         alloNull: false,
         type: DataTypes.STRING,
-        validate: {
-            min: 10,
-            max: 14
-        }
+        //validate: {
+           // min: 8,
+           // max: 14
+        //}
     },
 
     birthdayDate: {
@@ -64,10 +64,10 @@ const Users = db.define('users', {
         type: DataTypes.STRING
     },
 
-    /*role: {
+    roleId: {
         alloNull: false,
         type: DataTypes.UUID
-    },*/
+    },
 
     address: {
         type: DataTypes.STRING
@@ -79,11 +79,6 @@ const Users = db.define('users', {
             isUrl: true
         },
         field: 'profile_image'
-    },
-
-    country: {
-        alloNull: false,
-        type: DataTypes.STRING
     },
 
     status: {

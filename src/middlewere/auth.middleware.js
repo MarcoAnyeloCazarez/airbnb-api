@@ -1,4 +1,4 @@
-const { User } = require("../models/user.model");
+const Users = require("../models/user.model");
 
 
 const JwtStrategy = require("passport-jwt").Strategy,
@@ -6,12 +6,12 @@ const JwtStrategy = require("passport-jwt").Strategy,
 
 module.exports = (passport) => {
     const opts = {
-        jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),     //estrae la informacion con este 'JWT' generador de TOKEN
+        jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),     //extrae la informacion con este 'JWT' generador de TOKEN
         secretOrKey: "academlo" // debe estar en una variable de entorno
     };
     passport.use(
         new JwtStrategy(opts, (decoded, done) => {
-            User.findOne({where:{id:decoded.id}}, (err, user) => {
+            Users.findOne({where:{id: decoded.id}}, (err, user) => {
                 if(err){
                     return done(err, false)
                 }

@@ -37,10 +37,11 @@ Desarrollmos toda la lógica que se va a programar para ter
 - - POST
 - - PATCH
 
+Bibliografía para relaciones de tablas con sequelize: https://sequelize.org/docs/v6/core-concepts/assocs/
 
 # Paths de mi usuario a traves de mi aplicación
---> Registrar mi usuario
---> loggear mi usuario
+  -[✓]  1.- Registrar mi usuario    
+  -[✓]  2.- loggear mi usuario
 
 ## Gests (invitados o usuarios sin sesion iniciada)
     1.- Puede ver los lugares
@@ -77,3 +78,24 @@ Desarrollmos toda la lógica que se va a programar para ter
     9.- Eliminar un usuario
     10.- Modificar un usuario
     11.- Ver lugares de los hosts
+
+
+
+
+##### RUTAS
+
+ruta raiz
+/api/v1/accommodations
+
+/
+    - GET
+    - POST
+
+/:id
+    - GET
+    - PUT
+    - PATCH
+    - DELETE
+
+/:id/available/?arrival=value&departure=value         // para reviar fechas de reservaciones o en su caso disponibilidad
+    - GET

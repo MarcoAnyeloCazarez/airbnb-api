@@ -2,7 +2,7 @@
 
 const router = require("express").Router()
 const passport = require('passport')
-const { roleAdminMiddleware } = require("../../../skeleton-Profe/skeleton-gen14/src/middleware/adminRole")
+const rolesMiddlewares = require("../../../skeleton-Profe/skeleton-gen14/src/middleware/adminRole")
 require('../middlewere/auth.middleware')(passport)
 //const multer = require('multer')
 const { upload } = require('../utils/multer')
@@ -23,6 +23,7 @@ const upload =  multer({storage})
 
 router.route('/') //  /api/v1/users
     .get(usersServices.getAll)
+    .post(usersServices.registerUser)
 
 
     //! en esta ruta manejamos multer mara manejar archivos
@@ -40,9 +41,13 @@ router.route('/me/profile-img')
     .post(passport.authenticate('jwt', {session: false}),upload.single('profile_img'), usersServices.postProfileImg)
  
 router.route('/:id')
-    .get(passport.authenticate('jwt',{session: false}), roleAdminMiddleware, usersServices.getUsersById)
-    .delete(passport.authenticate('jwt',{session: false}), roleAdminMiddleware, usersServices.remove)
-    .put(passport.authenticate('jwt',{session: false}), roleAdminMiddleware, usersServices.edit)
-    
+    .get(passport.authenticate('jwt',{session: false}), rolesMiddlewares.roleAdminMiddleware, usersServices.getUsersById)
+    .delete(passport.authenticate('jwt', {session: false}), rolesMiddlewares.roleAdminMiddleware ,usersServices.remove)
+    .put(passport.authenticate('jwt',{session: false}), rolesMiddlewares.roleAdminMiddleware, usersServices.edit)
+
+router.route('/:id/role')
+    .get(usersServices.getUserRole)
+
+
 exports.router = router
 
