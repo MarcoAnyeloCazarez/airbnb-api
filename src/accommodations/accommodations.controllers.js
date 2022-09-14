@@ -14,3 +14,8 @@ const getAccommodationById = async (id) => {
     const data = await Accommodations.findByPk(id)
     return data
 } 
+
+module.exports = {
+    getAccommodationById,
+    getAllAccommodations
+}

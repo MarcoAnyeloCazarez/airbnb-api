@@ -9,6 +9,7 @@ const defaultData = require('./utils/initialData')
 //* Archivos con las rutas
 const userRouter = require('./users/users.router').router
 const authRouter = require('./auth/auth.router').router
+const accommodationsRouter = require('./accommodations/accommodations.router').router
 
 const {db} = require('./utils/database')
 
@@ -61,6 +62,7 @@ app.use('/api/v1/uploads/:imgName', (req, res) => {
     res.status(200).sendFile(path.resolve('uploads/') + '/' + imgName)
 })
 
+app.use('/api/v1/accommodations', accommodationsRouter)
 
 app.listen(8000, () => {
     console.log('server started at port 8000')
