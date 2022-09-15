@@ -5,7 +5,7 @@ const userController = require('../users/users.controller')
 const JwtStrategy = require("passport-jwt").Strategy,
     ExtractJwt = require("passport-jwt").ExtractJwt;
 
-/*module.exports = (passport) => {
+module.exports = (passport) => {
     const opts = {
         jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),     //extrae la informacion con este 'JWT' generador de TOKEN
         secretOrKey: "academlo" // debe estar en una variable de entorno
@@ -17,14 +17,14 @@ const JwtStrategy = require("passport-jwt").Strategy,
                     return done(err, false)
                 }
                 if(user){
-                    return done(null, user)
+                    return done(null, decoded)
                 }else{
                     return done(null, false)
                 }
             })
         })
     )
-};*/
+};
 
 
 module.exports = (passport) => {

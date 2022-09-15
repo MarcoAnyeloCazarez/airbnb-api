@@ -6,17 +6,17 @@ const db = new Sequelize({
     dialect: 'postgres',     //lo pdemos cambiar por el dialecto que se quiera usar, eje: mysql
     
     //ahora las credenciales para las bases de datos
-   /* host: 'localhost',
-    username: 'postgres',
-    password: '1602',
-    database: 'airbnb',
-    port: 5432 */ //pueto en el que se corre por defecto una base de datos
+    //host: 'localhost',
+    //username: 'postgres',
+    //password: '1602',
+    //database: 'airbnb',
+    port: 5432, //pueto en el que se corre por defecto una base de datos
 
     host: process.env.DB_HOST,
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB,
-    logging: false,
+    /*logging: false,
     dialectOptions:
         process.env.NODE_ENV === 'production'
         ? {
@@ -25,7 +25,7 @@ const db = new Sequelize({
             rejectUnauthorized: false,
             },
         }
-        : {},
+        : {}*/
 }) 
 
 module.exports = {
