@@ -11,7 +11,29 @@ const login = (req, res) => {
         return res.status(400).json({message: 'Missing data'})
     }
 
-    const response = loginUser(data.email, data.password)
+    loginUser(data.email, data.password)
+    .then((response) => {
+      if (response) {
+        const token = jwt.sign(
+          {
+            id: response.id,
+            email: response.email,
+            rol: response.rol,
+          },
+          "academlo"
+        );
+        return res
+          .status(200)
+          .json({ message: "Tus credenciales son correctas", token });
+      } else {
+        return res.status(401).json({ message: "Invalid Credentials" });
+      }
+    })
+    .catch(() => {
+      return res.status(401).json({ message: "Invalid Credentials" });
+    });
+
+    /*const response = loginUser(data.email, data.password)
 
     if(response){
 
@@ -24,7 +46,7 @@ const login = (req, res) => {
         return  res.status(200).json({message: 'Tus credenciales son correctas', token})   //? le debemos pasar el token en este punto
     }else{
         return res.status(400).json({message: 'Invalid credentials'})
-    }
+    }*/
 }
 
 

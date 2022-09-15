@@ -10,6 +10,7 @@ const userRouter = require('./users/users.router').router
 const authRouter = require('./auth/auth.router').router
 const accommodationsRouter = require('./accommodations/accommodations.router').router
 const placesRouter = require('./places/places.router').router
+const reservationsRouter = require('./reservations/reservations.router')
 
 const initModels = require('./models/initModels')
 const defaultData = require('./utils/initialData')
@@ -68,6 +69,7 @@ app.use('/api/v1/uploads/:imgName', (req, res) => {
 
 app.use('/api/v1/accommodations', accommodationsRouter)
 app.use('/api/v1/places', placesRouter)
+app.use('/api/v1/accommodations',  accommodationsRouter)
 
 //Ruta para documentar mi api
 app.use('/v1/doc', swaggerUi.serve, swaggerUi.setup(swaggerDoc))

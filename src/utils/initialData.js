@@ -18,7 +18,7 @@ const generateInitialData = async() => {
         id: "ed025bbb-5fbe-4ddf-9670-e43ce9d80c52",
         firstName: "Anyelo",
         lastName: "Cazarez",
-        email: "anyelocba7@gmail.com",
+        email: "anyelocaba7@gmail.com",
         gender: "male",
         password: "$2b$10$J8MM4kUcqvaSIxoOmUobHeVttKsjhLCgyjDQ3kPNuq9CCc7O/WeP2",
         phone: "123456789",

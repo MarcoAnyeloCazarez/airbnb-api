@@ -1,5 +1,5 @@
 const uuid = require('uuid')
-const { hashPassword, comparePassword } = require('../utils/crypt')   //! importamos las funciones para encriptar y desencriptar, hechas en el archivo crypts
+const { hashPassword } = require('../utils/crypt')   //! importamos las funciones para encriptar y desencriptar, hechas en el archivo crypts
 
 const Users = require('../models/user.model')
 const passport = require('passport')
@@ -42,7 +42,7 @@ const getUserById = async (id) => {
             is_active: true
         },
         attributes: {
-            exclude: [password]
+            exclude: ['password']
             //include:[name]  
         }
      })
@@ -99,12 +99,9 @@ const getUserByEmail = async (email) => {
     return data.length ? data[0] : false*/
     //? select * from users where email = ${email};
     const data = await Users.findOne({
-        where: {
-            email: email,
-            is_active: true
-        },
+        where: { email},
         attributes: {
-            exclude: [password, ] 
+            exclude: ['createdT', 'updatedAt' ] 
         }
      })
      return data
