@@ -1,5 +1,6 @@
 # Ruta del proyecto desplegado en render
 https://anyelo-clonairbnb.onrender.com
+profe: aun me da errores en el deplo, no me dio tiempo de poder reolverlo de forma adecuada
 
 # Rutas  
 Desarrollmos toda la lógica que se va a programar para ter
