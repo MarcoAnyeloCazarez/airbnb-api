@@ -32,7 +32,7 @@ const getUsersById = (req, res) => {
 
 const registerUser = (req, res) => {   
     const body = req.body      //debenos tener habilitada app.use(express.json()) en el archivo app.js
-    console.log(body)
+    //console.log(body)
     if(!body){
         return res.status(400).json({message: 'El body no existe'})
     }

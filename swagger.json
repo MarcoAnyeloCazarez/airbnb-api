@@ -1,0 +1,35 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API Rest Clon de airbnb",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/users" : {
+            "get" : {
+                "description" : "Obtener todos mis usuarios",
+                "tags" : ["Users", "v1"],
+                "responses" : {
+                    "200" : {
+                        "description" : "Obtenemos exitosamente todos los usuarios"
+                    },
+                    "400" : {
+                        "description" : "Generamos en caso de que la peticion no se resuelva"
+                    }
+                }
+            },
+            "post" : {
+                "description" : "Creamos un nuevo usuario en la base de datos",
+                "tags" : ["Users", "v1"],
+                "responses" : {
+                    "200" : {
+                        "description" : "Obtenemos el nuevo usuario creado"
+                    },
+                    "400" : {
+                        "description" : "En caso de que no se hay apodido crear el usuario"
+                    }
+                }
+            }
+        }
+    }
+}

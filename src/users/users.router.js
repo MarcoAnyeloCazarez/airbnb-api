@@ -2,7 +2,7 @@
 
 const router = require("express").Router()
 const passport = require('passport')
-const rolesMiddlewares = require("../../../skeleton-Profe/skeleton-gen14/src/middleware/adminRole")
+const rolesMiddlewares = require("../middlewere/adminRole")
 require('../middlewere/auth.middleware')(passport)
 //const multer = require('multer')
 const { upload } = require('../utils/multer')

@@ -1,15 +1,19 @@
 //* Dependencias
 const express = require('express')
+const swaggerUi = require('swagger-ui-express')    //librería para documentar la APPi
 const passport = require('passport')
 const path = require('path')   //esta libreria permite identificar una ruta o auto generarla
 require('./middlewere/auth.middleware')(passport)     //esta manera se usa para proeger una ruta, importar passport y a la ruta psarle passport
-const initModels = require('./models/initModels')
-const defaultData = require('./utils/initialData')
 
 //* Archivos con las rutas
 const userRouter = require('./users/users.router').router
 const authRouter = require('./auth/auth.router').router
 const accommodationsRouter = require('./accommodations/accommodations.router').router
+const placesRouter = require('./places/places.router').router
+
+const initModels = require('./models/initModels')
+const defaultData = require('./utils/initialData')
+const swaggerDoc = require('../swagger.json')
 
 const {db} = require('./utils/database')
 
@@ -63,6 +67,13 @@ app.use('/api/v1/uploads/:imgName', (req, res) => {
 })
 
 app.use('/api/v1/accommodations', accommodationsRouter)
+app.use('/api/v1/places', placesRouter)
+
+//Ruta para documentar mi api
+app.use('/v1/doc', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
+
+
+
 
 app.listen(8000, () => {
     console.log('server started at port 8000')
